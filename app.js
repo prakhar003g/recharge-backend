@@ -5,8 +5,8 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 require('./models/recharge')
 const Recharge = mongoose.model('recharge')
-
-var url = "mongodb://localhost:27017/recharge";
+var url="mongodb+srv://prakhar:prakhar@123@cluster0.ff2qh.mongodb.net/prakhar?retryWrites=true&w=majority"
+// var url = "mongodb://localhost:27017/recharge";
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }).then(function () {
   console.log("Connect Datebase");
 }, function (err) {
@@ -31,19 +31,19 @@ app.post("/addrecharge", async function (req, res) {
 
 app.get("/allrecharge", async function (req, res) {
   let getData = await Recharge.find({});
-  // if (getData) {
-  //   res.send({ status: 200, data: getData })
-  // }
-  // else {
-  //   res.send({ status: 400 })
-  // }
+  if (getData) {
+    res.send({ status: 200, data: getData })
+  }
+  else {
+    res.send({ status: 400 })
+  }
 
-  let sort1 = await Recharge.aggregate([
-  // { $match: { date: "$date" }},
-  { $group: { _id: { $dateToString: { format: "%Y-%m-%d", date: "$date"} }, count: { $sum: 1 } } },
-  { $sort: { _id: 1} }
-])
-res.send({data:sort1})
+  // let sort1 = await Recharge.aggregate([
+  // // { $match: { date: "$date" }},
+  // { $group: { _id: { $dateToString: { format: "%Y-%m-%d", date: "$date"} }, count: { $sum: 1 } } },
+  // { $sort: { _id: 1} }
+// ])
+// res.send({data:sort1})
 })
 
 app.post("/updateRecharge", async function (req, res) {
